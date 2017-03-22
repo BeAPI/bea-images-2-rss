@@ -3,7 +3,7 @@
  Plugin Name: BEA - Add images to rss feed
  Plugin URI: http://www.beapi.fr
  Description: Handle all wanted image's format sizes to be added as enclosure into site's feeds.
- Version: 1.0
+ Version: 1.1
  Author: BeAPI
  Author URI: https://www.beapi.fr
  --
@@ -21,6 +21,8 @@
 
 /**
  * Add Media Element to Feed Item
+ *
+ * @use SimplePie_Item $item->get_enclosures()
  *
  * @author Maxime CULEA
  */
@@ -45,13 +47,14 @@ function bea_add_feed_item_media() {
 	$title         = sanitize_text_field( $thumbnail->post_title );
 	$excerpt       = wp_kses_post( $thumbnail->post_excerpt );
 
+	// Add the media:group to complain with SimplePie parsing, even if media spec don't need it if inside an item
+	echo "<media:group>";
 	foreach ( $img_sizes as $img_size ) :
 		$img_attr = wp_get_attachment_image_src( $thumbnail->ID, $img_size );
 
 		$img_url    = esc_url( $img_attr[0] );
 		$img_width  = absint( $img_attr[1] );
 		$img_height = absint( $img_attr[2] ); ?>
-
 		<media:content url="<?php echo $img_url; ?>"
 			type="<?php echo esc_attr( $thumbnail->post_mime_type ); ?>"
 			medium="image"
@@ -72,6 +75,7 @@ function bea_add_feed_item_media() {
 			<?php endif; ?>
 		</media:content>
 	<?php endforeach;
+	echo "</media:group>";
 }
 
 add_action( 'rss2_item', 'bea_add_feed_item_media' );
