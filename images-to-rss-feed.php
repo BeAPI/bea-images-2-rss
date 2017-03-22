@@ -45,7 +45,6 @@ function bea_add_feed_item_media() {
 
 	$user_nicename = get_user_meta( (int) $thumbnail->post_author, 'user_nicename', true );
 	$title         = sanitize_text_field( $thumbnail->post_title );
-	$excerpt       = wp_kses_post( $thumbnail->post_excerpt );
 
 	// Add the media:group to complain with SimplePie parsing, even if media spec don't need it if inside an item
 	echo "<media:group>";
@@ -63,12 +62,10 @@ function bea_add_feed_item_media() {
 			<media:title type="plain">
 				<?php echo $title; ?>
 			</media:title>
-			<?php if ( ! empty( $excerpt ) ) : ?>
-				<media:description type="plain">
-					<?php echo $excerpt; ?>
-				</media:description>
-			<?php endif;
-			if ( ! empty( $user_nicename ) ) : ?>
+			<media:description>
+				<?php echo is_array( $img_size ) ? implode( '-', $img_size ) : $img_size; ?>
+			</media:description>
+			<?php if ( ! empty( $user_nicename ) ) : ?>
 				<media:copyright>
 					<?php echo esc_html( $user_nicename ); ?>
 				</media:copyright>
