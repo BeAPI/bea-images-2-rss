@@ -1,0 +1,13 @@
+{
+  "name": "bea/bea-images-2-rss",
+  "description": "Handle all wanted image's format sizes to be added as enclosure into site's feeds.",
+  "minimum-stability": "stable",
+  "license": "GPL-2.0",
+  "authors": [
+    {
+      "name": "BeAPI",
+      "email": "technique@beapi.fr"
+    }
+  ],
+  "type": "wordpress-muplugin"
+}
