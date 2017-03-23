@@ -62,9 +62,7 @@ function bea_add_feed_item_media() {
 			<media:title type="plain">
 				<?php echo $title; ?>
 			</media:title>
-			<media:description>
-				<?php echo is_array( $img_size ) ? implode( '-', $img_size ) : $img_size; ?>
-			</media:description>
+			<media:description><?php echo is_array( $img_size ) ? implode( '-', $img_size ) : $img_size; ?></media:description>
 			<?php if ( ! empty( $user_nicename ) ) : ?>
 				<media:copyright>
 					<?php echo esc_html( $user_nicename ); ?>
