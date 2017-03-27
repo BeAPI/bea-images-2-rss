@@ -62,7 +62,13 @@ function bea_add_feed_item_media() {
 			<media:title type="plain">
 				<?php echo $title; ?>
 			</media:title>
-			<media:description><?php echo is_array( $img_size ) ? implode( '-', $img_size ) : $img_size; ?></media:description>
+			<media:description>
+				<?php if ( is_array ( $img_size ) ) {
+                                        $img_size = ( ! empty ( $img_size['width'] ) && ! empty( $img_size['height'] ) ) ? 
+sprintf( '%s-%s', $img_size['width'], $img_size['height'] ) : implode( '-', $img_size );
+                                }
+                                echo $img_size; ?>
+			</media:description>
 			<?php if ( ! empty( $user_nicename ) ) : ?>
 				<media:copyright>
 					<?php echo esc_html( $user_nicename ); ?>
